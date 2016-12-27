@@ -68,7 +68,7 @@ class PictureGatlingTest extends Simulation {
             .exec(http("Create new picture")
             .post("/vmpicture/api/pictures")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "image":null, "tmbdId":"SAMPLE_TEXT", "size":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "image":null, "size":"0", "tmdbId":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_picture_url"))).exitHereIfFailed
             .pause(10)

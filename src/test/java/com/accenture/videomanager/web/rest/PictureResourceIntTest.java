@@ -42,11 +42,11 @@ public class PictureResourceIntTest {
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
-    private static final String DEFAULT_TMBD_ID = "AAAAAAAAAA";
-    private static final String UPDATED_TMBD_ID = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_SIZE = 1;
     private static final Integer UPDATED_SIZE = 2;
+
+    private static final String DEFAULT_TMDB_ID = "AAAAAAAAAA";
+    private static final String UPDATED_TMDB_ID = "BBBBBBBBBB";
 
     @Inject
     private PictureRepository pictureRepository;
@@ -84,8 +84,8 @@ public class PictureResourceIntTest {
         Picture picture = new Picture()
                 .image(DEFAULT_IMAGE)
                 .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
-                .tmbdId(DEFAULT_TMBD_ID)
-                .size(DEFAULT_SIZE);
+                .size(DEFAULT_SIZE)
+                .tmdbId(DEFAULT_TMDB_ID);
         return picture;
     }
 
@@ -112,8 +112,8 @@ public class PictureResourceIntTest {
         Picture testPicture = pictureList.get(pictureList.size() - 1);
         assertThat(testPicture.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testPicture.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
-        assertThat(testPicture.getTmbdId()).isEqualTo(DEFAULT_TMBD_ID);
         assertThat(testPicture.getSize()).isEqualTo(DEFAULT_SIZE);
+        assertThat(testPicture.getTmdbId()).isEqualTo(DEFAULT_TMDB_ID);
     }
 
     @Test
@@ -153,10 +153,10 @@ public class PictureResourceIntTest {
     }
 
     @Test
-    public void checkTmbdIdIsRequired() throws Exception {
+    public void checkTmdbIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = pictureRepository.findAll().size();
         // set the field null
-        picture.setTmbdId(null);
+        picture.setTmdbId(null);
 
         // Create the Picture, which fails.
 
@@ -181,8 +181,8 @@ public class PictureResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(picture.getId())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
-            .andExpect(jsonPath("$.[*].tmbdId").value(hasItem(DEFAULT_TMBD_ID.toString())))
-            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE)));
+            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE)))
+            .andExpect(jsonPath("$.[*].tmdbId").value(hasItem(DEFAULT_TMDB_ID.toString())));
     }
 
     @Test
@@ -197,8 +197,8 @@ public class PictureResourceIntTest {
             .andExpect(jsonPath("$.id").value(picture.getId()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
-            .andExpect(jsonPath("$.tmbdId").value(DEFAULT_TMBD_ID.toString()))
-            .andExpect(jsonPath("$.size").value(DEFAULT_SIZE));
+            .andExpect(jsonPath("$.size").value(DEFAULT_SIZE))
+            .andExpect(jsonPath("$.tmdbId").value(DEFAULT_TMDB_ID.toString()));
     }
 
     @Test
@@ -220,8 +220,8 @@ public class PictureResourceIntTest {
         updatedPicture
                 .image(UPDATED_IMAGE)
                 .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
-                .tmbdId(UPDATED_TMBD_ID)
-                .size(UPDATED_SIZE);
+                .size(UPDATED_SIZE)
+                .tmdbId(UPDATED_TMDB_ID);
 
         restPictureMockMvc.perform(put("/api/pictures")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -234,8 +234,8 @@ public class PictureResourceIntTest {
         Picture testPicture = pictureList.get(pictureList.size() - 1);
         assertThat(testPicture.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testPicture.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
-        assertThat(testPicture.getTmbdId()).isEqualTo(UPDATED_TMBD_ID);
         assertThat(testPicture.getSize()).isEqualTo(UPDATED_SIZE);
+        assertThat(testPicture.getTmdbId()).isEqualTo(UPDATED_TMDB_ID);
     }
 
     @Test

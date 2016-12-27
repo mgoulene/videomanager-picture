@@ -3,7 +3,6 @@ package com.accenture.videomanager.service.impl;
 import com.accenture.videomanager.service.PictureService;
 import com.accenture.videomanager.domain.Picture;
 import com.accenture.videomanager.repository.PictureRepository;
-import com.accenture.videomanager.service.utils.GetPictureFromURL;
 import com.accenture.videomanager.service.utils.TmdbDataLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,17 +74,17 @@ public class PictureServiceImpl implements PictureService{
     @Override
     public Picture findTmdbPicture(String id) {
         log.debug("Request to get Picture : {}", id);
-        Picture picture = pictureRepository.findOneByTmbdIdAndSize(id, null);
+        Picture picture = pictureRepository.findOneByTmdbIdAndSize(id, null);
         if (picture == null) {
             byte[] bytes = TmdbDataLoader.the().getImageData("/"+id+".jpg");
             picture = new Picture();
             picture.image(bytes)
                 .imageContentType(MimeTypeUtils.IMAGE_JPEG.getType())
                 .size(null)
-                .tmbdId(id);
+                .tmdbId(id);
             picture = pictureRepository.save(picture);
         }
-        picture.setId("1");
+        //picture.setId("1");
         return picture;
     }
 }

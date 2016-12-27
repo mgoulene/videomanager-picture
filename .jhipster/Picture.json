@@ -11,23 +11,24 @@
             ]
         },
         {
-            "fieldName": "tmbdId",
+            "fieldName": "size",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "tmdbId",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 100
-        },
-        {
-            "fieldName": "size",
-            "fieldType": "Integer"
+            "fieldValidateRulesMaxlength": "100"
         }
     ],
     "changelogDate": "20161225131522",
-    "entityTableName": "picture",
     "dto": "no",
-    "pagination": "infinite-scroll",
     "service": "serviceImpl",
-    "microserviceName": "vmpicture"
+    "entityTableName": "picture",
+    "pagination": "infinite-scroll",
+    "microserviceName": "vmpicture",
+    "searchEngine": false
 }

@@ -27,13 +27,13 @@ public class Picture implements Serializable {
     @Field("image_content_type")
     private String imageContentType;
 
-    @NotNull
-    @Size(max = 100)
-    @Field("tmbd_id")
-    private String tmbdId;
-
     @Field("size")
     private Integer size;
+
+    @NotNull
+    @Size(max = 100)
+    @Field("tmdb_id")
+    private String tmdbId;
 
     public String getId() {
         return id;
@@ -69,19 +69,6 @@ public class Picture implements Serializable {
         this.imageContentType = imageContentType;
     }
 
-    public String getTmbdId() {
-        return tmbdId;
-    }
-
-    public Picture tmbdId(String tmbdId) {
-        this.tmbdId = tmbdId;
-        return this;
-    }
-
-    public void setTmbdId(String tmbdId) {
-        this.tmbdId = tmbdId;
-    }
-
     public Integer getSize() {
         return size;
     }
@@ -93,6 +80,19 @@ public class Picture implements Serializable {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public String getTmdbId() {
+        return tmdbId;
+    }
+
+    public Picture tmdbId(String tmdbId) {
+        this.tmdbId = tmdbId;
+        return this;
+    }
+
+    public void setTmdbId(String tmdbId) {
+        this.tmdbId = tmdbId;
     }
 
     @Override
@@ -121,8 +121,8 @@ public class Picture implements Serializable {
             "id=" + id +
             ", image='" + image + "'" +
             ", imageContentType='" + imageContentType + "'" +
-            ", tmbdId='" + tmbdId + "'" +
             ", size='" + size + "'" +
+            ", tmdbId='" + tmdbId + "'" +
             '}';
     }
 }

@@ -10,5 +10,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 @SuppressWarnings("unused")
 public interface PictureRepository extends MongoRepository<Picture,String> {
 
-    public Picture findOneByTmbdIdAndSize(String tmdbId, Integer size);
+    public Picture findOneByTmdbIdAndSize(String tmdbId, Integer size);
 }
