@@ -120,9 +120,9 @@ public class PictureResource {
      */
     @GetMapping("/tmdb-pictures/{id}")
     @Timed
-    public ResponseEntity<Picture> getTmdbPicture(@PathVariable String id) {
-        log.debug("REST request to get getTmdbPicture : {}", id);
-        Picture picture = pictureService.findTmdbPicture(id);
+    public ResponseEntity<Picture> getTmdbPicture(@PathVariable String id, @RequestParam(value = "size") Integer size) {
+        log.debug("REST request to get getTmdbPicture : {}", id, size);
+        Picture picture = pictureService.findTmdbPicture(id, size);
         return Optional.ofNullable(picture)
             .map(result -> new ResponseEntity<>(
                 result,

@@ -72,19 +72,37 @@ public class PictureServiceImpl implements PictureService{
     }
 
     @Override
-    public Picture findTmdbPicture(String id) {
-        log.debug("Request to get Picture : {}", id);
-        Picture picture = pictureRepository.findOneByTmdbIdAndSize(id, null);
+    public Picture findTmdbPicture(String id, Integer size) {
+        log.debug("Request to get Picture : {}", id, size);
+        Picture picture = pictureRepository.findOneByTmdbIdAndSize(id, size);
         if (picture == null) {
-            byte[] bytes = TmdbDataLoader.the().getImageData("/"+id+".jpg");
-            picture = new Picture();
-            picture.image(bytes)
-                .imageContentType(MimeTypeUtils.IMAGE_JPEG.getType())
-                .size(null)
-                .tmdbId(id);
-            picture = pictureRepository.save(picture);
+            if (size == null) {
+                byte[] bytes = TmdbDataLoader.the().getImageData("/" + id + ".jpg");
+                picture = new Picture();
+                picture.image(bytes)
+                    .imageContentType(MimeTypeUtils.IMAGE_JPEG.getType())
+                    .size(null)
+                    .tmdbId(id);
+                picture = pictureRepository.save(picture);
+            } else {
+                Picture originalPicture = pictureRepository.findOneByTmdbIdAndSize(id, null);
+                if (originalPicture == null) {
+                    byte[] bytes = TmdbDataLoader.the().getImageData("/" + id + ".jpg");
+                    originalPicture = new Picture();
+                    originalPicture.image(bytes)
+                        .imageContentType(MimeTypeUtils.IMAGE_JPEG.getType())
+                        .size(null)
+                        .tmdbId(id);
+                    originalPicture = pictureRepository.save(originalPicture);
+                }
+                picture = new Picture();
+                picture.image(TmdbDataLoader.the().getResizeImageDate(originalPicture.getImage(), size))
+                    .imageContentType(MimeTypeUtils.IMAGE_JPEG.getType())
+                    .size(size)
+                    .tmdbId(id);
+                picture = pictureRepository.save(picture);
+            }
         }
-        //picture.setId("1");
         return picture;
     }
 }

@@ -41,5 +41,5 @@ public interface PictureService {
      */
     void delete(String id);
 
-    Picture findTmdbPicture(String id);
+    Picture findTmdbPicture(String id, Integer size);
 }
